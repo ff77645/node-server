@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@ifyour/deeplx@^0.1.16":
+  "integrity" "sha512-H31FB0YwRkq8vaJdiXhZzGaiIz+z5cFBciUe/8r1GOcIK1n19zeSmrZkemPP7ZOCPX3WfLXuG8d6bHQiZJtHog=="
+  "resolved" "https://registry.npmmirror.com/@ifyour/deeplx/-/deeplx-0.1.16.tgz"
+  "version" "0.1.16"
+
 "@redis/bloom@1.2.0":
   "integrity" "sha512-HG2DFjYKbpNmVXsa0keLHp/3leGJz1mjh09f2RLGGLQZzSHpkmZWuwJbAvo3QcRY8p80m5+ZdXZdYOSBLlp7Cg=="
   "resolved" "https://registry.npmmirror.com/@redis/bloom/-/bloom-1.2.0.tgz"
