@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 
 const isDev = process.env.NODE_ENV === 'development'
-const PORT = 80
+const PORT = 443
 const envPath = isDev? '.env.development' : '.env'
 
 dotenv.config({path:envPath})
