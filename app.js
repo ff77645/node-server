@@ -1,15 +1,20 @@
 import express from 'express'
-import { createServer } from 'http'
+import { createServer } from 'https'
 import morgan from 'morgan'
 import cors from 'cors'
 import socket from './socket/index.js'
 import router_v1 from './routes/v1/index.js'
+import path from 'path'
+import fs from 'fs'
 
 
 const isDev = process.env.NODE_ENV !== 'production'
 
 const app = express()
-const httpServer = createServer(app)
+const httpServer = createServer({
+  key:fs.readFileSync(path.resolve('ssl/summer9.cn.key')),
+  cert:fs.readFileSync(path.resolve('ssl/summer9.cn.pem')),
+},app)
 socket(httpServer)
 
 if(isDev){
