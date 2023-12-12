@@ -18,6 +18,7 @@ if(isDev){
 }
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use('/chat',express.static('dist'))
 
 app.get('/',(req,res)=>{
   res.send('node server.')
