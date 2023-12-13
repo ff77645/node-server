@@ -1,5 +1,6 @@
 import express from 'express'
 import { createServer } from 'https'
+import { createServer as createServers } from 'http'
 import morgan from 'morgan'
 import cors from 'cors'
 import socket from './socket/index.js'
@@ -15,7 +16,9 @@ const httpServer = createServer({
   key:fs.readFileSync(path.resolve('ssl/summer9.cn.key')),
   cert:fs.readFileSync(path.resolve('ssl/summer9.cn.pem')),
 },app)
+const httpServers = createServers(app)
 socket(httpServer)
+socket(httpServers)
 
 if(isDev){
   app.use(morgan('dev'))
@@ -36,4 +39,13 @@ app.use((err,req,res,next)=>{
   res.status(500).send(err.message)
 })
 
-export default httpServer
+const App = {
+  listen(port,fn){
+    httpServer.listen(port,fn)
+    httpServers.listen(80,()=>{
+      console.log(`App listening 80.`);
+    })
+  }
+}
+
+export default App
