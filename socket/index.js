@@ -14,8 +14,8 @@ const io = new Server({
 //         console.log('disconnect',i.id);
 //     })
 // })
+chatServer(io)
 
 export default httpServer =>{
-    chatServer(io)
     io.attach(httpServer)
 }

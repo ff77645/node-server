@@ -105,6 +105,7 @@ export const getUserInfo = catchAsync(async (req,res)=>{
             'SELECT * FROM users WHERE id =?',
             [data.id]
         )
+        if(!user) return res.json(Err.msg('用户不存在',404))
         const _token = await sign({id:data.id},JWT_SECRET,{
             expiresIn:TOKEN_EXPIRE
         })
