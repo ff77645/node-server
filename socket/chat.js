@@ -18,11 +18,11 @@ export default io =>{
     //     nsp.in(room).emit('join-room',{amount,room})
     // })
 
-    adapter.on('leave-room',async room=>{
-        console.log('离开房间',room);
-        const amount = (await nsp.in(room).allSockets()).size
-        nsp.in(room).emit('leave-room',{amount,room:room})
-    })
+    // adapter.on('leave-room',async room=>{
+    //     console.log('离开房间',room);
+    //     const amount = (await nsp.in(room).allSockets()).size
+    //     nsp.in(room).emit('leave-room',{amount,room:room})
+    // })
 
     // adapter.on('delete-room',room=>{
     //     console.log('删除房间',room);
@@ -38,8 +38,11 @@ export default io =>{
             console.log({room,amount});
             nsp.in(room).emit('join-room',{amount,room})
         })
-        socket.on('leave-room',roomid=>{
-            socket.leave(roomid)
+        socket.on('leave-room',async room=>{
+            socket.leave(room)
+            console.log('离开房间',room);
+            const amount = (await nsp.in(room).allSockets()).size
+            nsp.in(room).emit('leave-room',{amount,room:room})
         })
 
         socket.join(COMMON_ROOM)

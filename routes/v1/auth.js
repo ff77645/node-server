@@ -11,7 +11,8 @@ const router = new Router()
 // router.post('/refresh-token',ctl.refreshToken)
 router.post('/login',ctl.login)
 router.post('/update-user',ctl.updateUserData)
-router.get('/user-info',ctl.getUserInfo)
+router.get('/user/token',ctl.getUserDataForToken)
+router.get('/user/id',ctl.getUserDataForId)
 
 
 

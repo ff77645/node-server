@@ -74,13 +74,14 @@ export const updateUserData = catchAsync(async (req,res)=>{
         mobile=user.mobile,
         mobile_confirmed=user.mobile_confirmed,
         avatar,
+        avatarSize,
     } = req.body
     if(avatar){
         const create_date = dayjs().format('YYYY-MM-DD HH:mm:ss')
         const img_type = 'user_head'
         await pool.query(
-            'INSERT INTO user_image(uid,img_src,img_type,create_date) VALUES (?,?,?,?)',
-            [id,avatar,img_type,create_date]
+            'INSERT INTO assets(user_id,path,type,create_date,size) VALUES (?,?,?,?,?)',
+            [id,avatar,img_type,create_date,avatarSize]
         )
     }else{
         avatar=user.avatar
@@ -94,11 +95,11 @@ export const updateUserData = catchAsync(async (req,res)=>{
 
 
 // 获取用户数据
-export const getUserInfo = catchAsync(async (req,res)=>{
+export const getUserDataForToken = catchAsync(async (req,res)=>{
     let {
         token
     } = req.query
-    console.log({token});
+    if(!token) return res.json(Err.msg('token不存在',401))
     try{
         const data = await verify(token,JWT_SECRET)
         const [[user]] = await pool.query(
@@ -116,4 +117,17 @@ export const getUserInfo = catchAsync(async (req,res)=>{
     }catch(e){
         return res.json(Err.msg('token失效',401))
     }
+})
+
+export const getUserDataForId = catchAsync(async (req,res)=>{
+    let {
+        id
+    } = req.query
+    if(!id) return res.json(Err.msg('id 不存在',400))
+    const [[user]] = await pool.query(
+        'SELECT * FROM users WHERE id =?',
+        [id]
+    )
+    if(!user) return res.json(Err.msg('用户不存在',404))
+    return res.json(Ok.msg('获取成功',user))
 })
